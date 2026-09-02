@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>تلاميذي — دفتر متابعة التلاميذ</title>
+    <meta
+      name="description"
+      content="دفتر متابعة رقمي للمعلمة: سجلات التلاميذ، الحضور والغياب، النتائج، والملاحظات — في مكان واحد."
+    />
+
+    <!-- تطبيق قابل للتثبيت على الهاتف -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="theme-color" content="#0e3b2e" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="تلاميذي" />
+
+    <!-- الخطوط -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lalezar&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #edf1e8;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <!-- مؤشر يظهر ريثما يُحمَّل التطبيق، ويستبدله التطبيق فور تشغيله -->
+      <div
+        style="
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          font-family: 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+          color: #175243;
+        "
+      >
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" style="animation: tl-spin 1s linear infinite">
+          <circle cx="12" cy="12" r="9" stroke="#dce4d4" stroke-width="3.5" />
+          <path d="M21 12a9 9 0 0 0-9-9" stroke="#e8a13c" stroke-width="3.5" stroke-linecap="round" />
+        </svg>
+        <p style="font-family: 'Lalezar', Tahoma, sans-serif; font-size: 22px; margin: 0; color: #0a2e24">
+          جارٍ فتح دفتر تلاميذك…
+        </p>
+        <style>
+          @keyframes tl-spin {
+            to { transform: rotate(360deg); }
+          }
+        </style>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
