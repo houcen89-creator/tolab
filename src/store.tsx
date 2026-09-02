@@ -22,8 +22,19 @@ function loadInitial(): AppState {
   try {
     const raw = localStorage.getItem(LS_KEY);
     if (raw) {
-      const p = JSON.parse(raw) as AppState;
-      if (p && Array.isArray(p.students)) return p;
+      const p = JSON.parse(raw) as Partial<AppState>;
+      if (p && Array.isArray(p.students)) {
+        return {
+          teacherName:
+            typeof p.teacherName === 'string' && p.teacherName.trim()
+              ? p.teacherName
+              : 'الأستاذة',
+          students: p.students,
+          attendance: Array.isArray(p.attendance) ? p.attendance : [],
+          grades: Array.isArray(p.grades) ? p.grades : [],
+          notes: Array.isArray(p.notes) ? p.notes : [],
+        };
+      }
     }
   } catch {
     /* تجاهل التلف وأعد البذور */

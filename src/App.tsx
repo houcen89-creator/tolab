@@ -1,5 +1,10 @@
-import { useState } from 'react';
-import type { ComponentType, CSSProperties, ReactNode } from 'react';
+import { Component, useState } from 'react';
+import type {
+  ComponentType,
+  CSSProperties,
+  ErrorInfo,
+  ReactNode,
+} from 'react';
 import {
   BarChart3,
   ClipboardCheck,
@@ -227,12 +232,69 @@ function Shell() {
   );
 }
 
+/** حاجز أخطاء — يعرض رسالة عربية واضحة بدل صفحة فارغة */
+class ErrorBoundary extends Component<
+  { children: ReactNode },
+  { error: Error | null }
+> {
+  state = { error: null as Error | null };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('Talameethi error:', error, info);
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <div
+          dir="rtl"
+          className="flex min-h-screen flex-col items-center justify-center bg-[#edf1e8] p-6 text-center"
+          style={{ fontFamily: "'IBM Plex Sans Arabic', Tahoma, sans-serif" }}
+        >
+          <span className="grid h-16 w-16 place-items-center rounded-2xl bg-[#f6e0dd] text-3xl">
+            ⚠️
+          </span>
+          <h1
+            className="mt-4 text-3xl text-[#0a2e24]"
+            style={{ fontFamily: "'Lalezar', Tahoma, sans-serif" }}
+          >
+            حدث خطأ غير متوقع
+          </h1>
+          <p className="mt-2 max-w-md text-sm leading-7 text-[#64756a]">
+            بياناتك محفوظة ولن تضيع. جرّبي إعادة تحميل الصفحة، وإن تكرر الخطأ
+            فامسحي بيانات الموقع من إعدادات المتصفح ثم أعيدي فتح التطبيق.
+          </p>
+          <p
+            dir="ltr"
+            className="mt-3 max-w-md rounded-lg bg-white px-3 py-2 text-[11px] text-[#a93b31]"
+          >
+            {String(this.state.error?.message || this.state.error)}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-5 rounded-xl bg-[#e8a13c] px-6 py-3 text-sm font-bold text-[#241503] shadow-lg transition hover:bg-[#c9861f] hover:text-white"
+          >
+            إعادة تحميل التطبيق
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function App() {
   return (
-    <StoreProvider>
-      <ToastProvider>
-        <Shell />
-      </ToastProvider>
-    </StoreProvider>
+    <ErrorBoundary>
+      <StoreProvider>
+        <ToastProvider>
+          <Shell />
+        </ToastProvider>
+      </StoreProvider>
+    </ErrorBoundary>
   );
 }
